@@ -31,7 +31,7 @@ export const authOptions: NextAuthOptions = {
           data: {
             email: user.email,
             username: user.name!,
-            Provider: "Google"
+            Provider: "Google",
           },
         });
       }
@@ -50,5 +50,8 @@ export const authOptions: NextAuthOptions = {
       }
       return session;
     },
+  },
+  pages: {
+    signIn: "/login",
   },
 };
