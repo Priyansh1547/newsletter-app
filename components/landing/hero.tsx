@@ -4,7 +4,7 @@ export function Hero() {
       <div className="relative">
         <div className="absolute inset-2 bottom-0 rounded-4xl ring-1 ring-black/5 ring-inset bg-linear-115 from-[#fff1be] from-28% via-[#ee87cb] via-70% to-[#b060ff] sm:bg-linear-145"></div>
         <div className="relative px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl lg:max-w-7xl">
+          <div className="mx-auto max-w-screen-xl">
             <header className="pt-12 sm:pt-16">
               <div>
                 <div className="flex justify-between group/row relative isolate pt-[calc(--spacing(2)+1px)] last:pb-[calc(--spacing(2)+1px)]">
@@ -93,8 +93,8 @@ export function Hero() {
                 </div>
               </div>
             </header>
-            <div className="pt-16 pb-24 sm:pt-24 sm:pb-32 md:pt-32 md:pb-48">
-              <h1 className="font-display text-6xl/[0.9] font-medium tracking-tight text-balance text-gray-950 sm:text-8xl/[0.8] md:text-9xl/[0.8]">
+            <div className="pt-20 pb-32 sm:pt-28 sm:pb-40">
+              <h1 className="font-display text-6xl/[0.9] font-medium tracking-tight text-balance text-gray-950 sm:text-7xl/[0.8] md:text-8xl/[0.8]">
                 Close every deal
               </h1>
               <p className="mt-8 max-w-lg text-xl/7 font-medium text-gray-950/75 sm:text-2xl/8">
@@ -103,8 +103,8 @@ export function Hero() {
               </p>
               <div className="mt-12 flex flex-col gap-x-6 gap-y-4 sm:flex-row">
                 <a
-                  className="inline-flex items-center justify-center px-4 py-[calc(--spacing(2)-1px)] rounded-full border border-transparent bg-gray-950 shadow-md text-base font-medium whitespace-nowrap text-white hover:bg-gray-800 w-52"
-                  href="login"
+                  className="inline-flex items-center justify-center px-4 py-[calc(--spacing(2)-1px)] rounded-full border border-transparent bg-gray-950 shadow-md text-base font-medium whitespace-nowrap text-white  hover:bg-gray-800"
+                  href="/login"
                 >
                   Get started
                 </a>
