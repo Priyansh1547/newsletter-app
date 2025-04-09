@@ -11,7 +11,6 @@ import {
 import { Input } from "../ui/input";
 import { MailIcon } from "lucide-react";
 import { Label } from "../ui/label";
-import { Textarea } from "../ui/textarea";
 
 export default function CreateNewsletterCard() {
   return (
@@ -52,11 +51,8 @@ export default function CreateNewsletterCard() {
                 />
               </div>
               <div className="space-y-2">
-                <Label>
-                  Description{" "}
-                  <span className="text-neutral-600">(optional)</span>
-                </Label>
-                <Textarea placeholder="Description of your newsletter" />
+                <Label>Slug</Label>
+                <Input placeholder="" type="text" aria-label="Name" />
               </div>
             </div>
           </div>
