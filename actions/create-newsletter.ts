@@ -6,10 +6,9 @@ import prisma from "@/db";
 interface Data {
   name: string;
   slug: string;
-  Description?: string;
 }
 
-export async function createWorkSpace(data: Data) {
+export async function createNewsletter(data: Data) {
   const session = await getServerSession(authOptions);
 
   if (!session || !session.user?.email) {
@@ -21,18 +20,16 @@ export async function createWorkSpace(data: Data) {
   });
 
   if (existingNewsletterSlug) {
-    return { error: "Workspace slug already exists", status: 409 };
+    return { error: "Newsletter slug already exists", status: 409 };
   }
 
   const newsletter = await prisma.newsletter.create({
     data: {
       name: data.name,
       slug: data.slug,
-      user: {
-        connect: { id: session.user.id },
-      },
+      userId: session.user.id,
     },
   });
 
-  return { newsletter, status: 201 };
+  return { newsletters: newsletter, status: 201 };
 }

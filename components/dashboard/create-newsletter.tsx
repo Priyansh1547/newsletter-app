@@ -1,4 +1,5 @@
-import { Plus } from "lucide-react";
+"use client";
+import { Plus, MailIcon, Loader2 } from "lucide-react";
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -9,10 +10,74 @@ import {
   DialogTrigger,
 } from "../ui/dialog";
 import { Input } from "../ui/input";
-import { MailIcon } from "lucide-react";
 import { Label } from "../ui/label";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import slugify from "@sindresorhus/slugify";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { createNewsletter } from "@/actions";
+import * as z from "zod";
 
-export default function CreateNewsletterCard() {
+const formSchema = z.object({
+  name: z.string().min(3, { message: "Name must be at least 3 character" }),
+  slug: z.string().min(3, { message: "Slug must be at least 3 character" }),
+});
+
+type Newsletter = z.infer<typeof formSchema>;
+
+export function CreateNewsletterCard() {
+  const [isChecking, setIsChecking] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
+
+  const form = useForm<Newsletter>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+      slug: "",
+    },
+    mode: "onChange",
+  });
+
+  const onSubmit = async (values: Newsletter) => {
+    setIsChecking(true);
+    setError(null);
+
+    try {
+      const slugifySlug = slugify(values.slug);
+      const response = await createNewsletter({
+        name: values.name,
+        slug: slugifySlug,
+      });
+
+      if (response.error) {
+        setError(response.error);
+        return;
+      }
+
+      router.push(`/dashboard/newsletter/${values.name}`);
+    } catch (e) {
+      setError("Failed to create workspace. Please try again.");
+    } finally {
+      setIsChecking(false);
+    }
+  };
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const name = e.target.value;
+    form.setValue("name", name);
+    form.setValue("slug", slugify(name));
+    setError(null);
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -23,10 +88,7 @@ export default function CreateNewsletterCard() {
       </DialogTrigger>
       <DialogContent>
         <div className="mb-2 flex flex-col items-center gap-2">
-          <div
-            className="flex size-11 shrink-0 items-center justify-center rounded-full border"
-            aria-hidden="true"
-          >
+          <div className="flex size-11 shrink-0 items-center justify-center rounded-full border">
             <MailIcon />
           </div>
           <DialogHeader>
@@ -39,27 +101,66 @@ export default function CreateNewsletterCard() {
           </DialogHeader>
         </div>
 
-        <form className="space-y-4">
-          <div className="mt-2">
-            <div className="relative space-y-4">
-              <div className="space-y-2">
-                <Label>Name</Label>
-                <Input
-                  placeholder="Morning brew"
-                  type="text"
-                  aria-label="Name"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label>Slug</Label>
-                <Input placeholder="" type="text" aria-label="Name" />
-              </div>
+        <Form {...form}>
+          <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
+            <div className="mt-2 space-y-4">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <Label>Newsletter Name</Label>
+                    <FormControl>
+                      <Input
+                        placeholder="Acme, Inc."
+                        {...field}
+                        onChange={handleNameChange}
+                        className="rounded-md border-gray-300"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="slug"
+                render={({ field }) => (
+                  <FormItem>
+                    <Label>Slug</Label>
+                    <FormControl>
+                      <Input
+                        placeholder="acme"
+                        {...field}
+                        onChange={(e) => {
+                          setError(null);
+                          field.onChange(e);
+                        }}
+                        className="rounded-md border-gray-300"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
-          </div>
-          <Button type="button" className="w-full">
-            Create a newsletter
-          </Button>
-        </form>
+
+            {error && (
+              <p className="text-sm text-red-500 text-center">{error}</p>
+            )}
+
+            <Button className="w-full" type="submit" disabled={isChecking}>
+              {isChecking ? (
+                <div className="flex items-center justify-center">
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Creating...
+                </div>
+              ) : (
+                "Create newsletter"
+              )}
+            </Button>
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
   );
