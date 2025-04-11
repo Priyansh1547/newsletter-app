@@ -65,7 +65,7 @@ export function CreateNewsletterCard() {
 
       router.push(`/dashboard/newsletter/${values.name}`);
     } catch (e) {
-      setError("Failed to create workspace. Please try again.");
+      setError(`Failed to create workspace. Please try again. ${e}`);
     } finally {
       setIsChecking(false);
     }

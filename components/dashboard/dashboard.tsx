@@ -1,11 +1,14 @@
+"use client";
+
+import { useEffect } from "react";
+import { useAtom } from "jotai";
+import { newslettersAtom } from "@/store/newsletter";
+import { getNewsletters } from "@/actions";
 import { CreateNewsletterCard } from "./create-newsletter";
 import { NewsletterCard } from "./newsletterCard";
-import { useState, useEffect } from "react";
-import { getNewsletters } from "@/actions";
-import { NewsletterResponse } from "@/types/NewsletterResponse";
 
 export function Dashboard() {
-  const [newsletters, setNewsletters] = useState<NewsletterResponse[]>([]);
+  const [newsletters, setNewsletters] = useAtom(newslettersAtom);
 
   useEffect(() => {
     const fetchNewsletters = async () => {
@@ -19,7 +22,6 @@ export function Dashboard() {
         );
       }
     };
-
     fetchNewsletters();
   }, []);
 
@@ -39,8 +41,8 @@ export function Dashboard() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 py-4">
           <CreateNewsletterCard />
-          {newsletters.map((newsletter) => (
-            <NewsletterCard key={newsletter.id} newsletter={newsletter} />
+          {newsletters.map((n) => (
+            <NewsletterCard key={n.id} newsletter={n} />
           ))}
         </div>
       </div>

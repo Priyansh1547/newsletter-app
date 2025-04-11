@@ -10,23 +10,21 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 
-export function NavProjects({
-  projects,
+export function NavNewsletter({
+  newsletter,
+  newsletterName,
 }: {
-  projects: {
-    name: string;
-    url: string;
-    icon: LucideIcon;
-  }[];
+  newsletter: { name: string; icon: LucideIcon; url: string }[];
+  newsletterName: string;
 }) {
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-      <SidebarGroupLabel>Projects</SidebarGroupLabel>
+      <SidebarGroupLabel>Newsletter</SidebarGroupLabel>
       <SidebarMenu>
-        {projects.map((item) => (
+        {newsletter.map((item) => (
           <SidebarMenuItem key={item.name}>
             <SidebarMenuButton asChild>
-              <a href={item.url}>
+              <a href={`/newsletter/${newsletterName}`}>
                 <item.icon />
                 <span>{item.name}</span>
               </a>

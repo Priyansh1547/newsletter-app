@@ -10,7 +10,7 @@ export function NewsletterCard({
 }) {
   return (
     <>
-      <Link href={`/dashboard/newsletter/${newsletter.name}`}>
+      <Link href={`/newsletter/${newsletter.name}`}>
         <div className="w-80 h-52 rounded-xl border border-neutral-200 bg-white hover:bg-gray-50 transition-all duration-200 flex flex-col justify-between p-4 space-y-4">
           <div className="flex items-center gap-2">
             <div className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center">
