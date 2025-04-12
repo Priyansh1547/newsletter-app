@@ -1,14 +1,13 @@
 "use client";
 
-import { useEffect } from "react";
-import { useAtom } from "jotai";
-import { newslettersAtom } from "@/store/newsletter";
+import { useEffect, useState } from "react";
 import { getNewsletters } from "@/actions";
 import { CreateNewsletterCard } from "./create-newsletter";
 import { NewsletterCard } from "./newsletterCard";
+import { NewsletterResponse } from "@/types/NewsletterResponse";
 
 export function Dashboard() {
-  const [newsletters, setNewsletters] = useAtom(newslettersAtom);
+  const [newsletters, setNewsletters] = useState<NewsletterResponse[]>([]);
 
   useEffect(() => {
     const fetchNewsletters = async () => {

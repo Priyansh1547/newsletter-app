@@ -3,7 +3,6 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
 export default function RootLayout({
   children,
-  params,
 }: Readonly<{
   children: React.ReactNode;
   params: { name: string };
@@ -12,7 +11,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <SidebarProvider>
-          <AppSidebar type="newsletter" newsletterName={params.name} />
+          <AppSidebar type="newsletter" />
           <SidebarInset>{children}</SidebarInset>
         </SidebarProvider>
       </body>
