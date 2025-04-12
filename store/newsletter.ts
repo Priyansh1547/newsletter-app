@@ -1,3 +1,3 @@
 import { atom } from "jotai";
 
-export const newsletterNameAtom = atom<string>("");
+export const newsletterSlugAtom = atom<string>("");

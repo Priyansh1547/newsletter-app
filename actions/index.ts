@@ -1,3 +1,4 @@
-export * from "./create-newsletter";
-// export * from "./delete-newsletter";
-export * from "./getNewsletters";
+export * from "./newsletter/create-newsletter";
+export * from "./newsletter/delete-newsletters";
+export * from "./newsletter/getNewsletters";
+export * from "./newsletter/checkNewsletter";

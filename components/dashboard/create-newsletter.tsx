@@ -25,10 +25,11 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createNewsletter } from "@/actions";
 import * as z from "zod";
+import { toast } from "sonner";
 
 const formSchema = z.object({
-  name: z.string().min(3, { message: "Name must be at least 3 character" }),
-  slug: z.string().min(3, { message: "Slug must be at least 3 character" }),
+  name: z.string().min(3, { message: "Name must be at least 3 characters" }),
+  slug: z.string().min(3, { message: "Slug must be at least 3 characters" }),
 });
 
 type Newsletter = z.infer<typeof formSchema>;
@@ -60,12 +61,15 @@ export function CreateNewsletterCard() {
 
       if (response.error) {
         setError(response.error);
+        toast.error(response.error);
         return;
       }
 
-      router.push(`/dashboard/newsletter/${values.name}`);
+      toast.success("Newsletter created successfully!");
+      router.push(`/newsletter/${values.name}`);
     } catch (e) {
       setError(`Failed to create workspace. Please try again. ${e}`);
+      toast.error(`Failed to create workspace. Please try again.`);
     } finally {
       setIsChecking(false);
     }

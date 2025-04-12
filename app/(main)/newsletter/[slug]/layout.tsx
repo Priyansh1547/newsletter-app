@@ -5,10 +5,9 @@ export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
-  params: { name: string };
 }>) {
   return (
-    <html lang="en">
+    <html>
       <body>
         <SidebarProvider>
           <AppSidebar type="newsletter" />
