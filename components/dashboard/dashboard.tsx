@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { getNewsletters } from "@/actions";
 import { CreateNewsletterCard } from "./create-newsletter";
 import { NewsletterCard } from "./newsletterCard";
-import { NewsletterResponse } from "@/types/NewsletterResponse";
+import { NewsletterResponse } from "@/types";
 import { toast } from "sonner";
 import { Skeleton } from "@/components/ui/skeleton";
 

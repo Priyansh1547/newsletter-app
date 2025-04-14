@@ -24,6 +24,12 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "../ui/dropdown-menu";
 
 const data = {
   user: {
@@ -83,14 +89,7 @@ export function AppSidebar({
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg">
-              <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                <Command className="size-4" />
-              </div>
-              <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">Stack Mail</span>
-              </div>
-            </SidebarMenuButton>
+            {type === "dasboard" && <NavUser user={data.user} />}
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
@@ -102,12 +101,6 @@ export function AppSidebar({
           <NavNewsletter newsletter={data.newsletter} />
         )}
       </SidebarContent>
-
-      {type === "dasboard" && (
-        <SidebarFooter>
-          <NavUser user={data.user} />
-        </SidebarFooter>
-      )}
     </Sidebar>
   );
 }
