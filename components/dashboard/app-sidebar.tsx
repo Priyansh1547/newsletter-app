@@ -67,7 +67,7 @@ export function AppSidebar({
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            {type === "dasboard" && <NavUser />}
+            <NavUser />
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
