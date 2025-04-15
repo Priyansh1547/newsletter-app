@@ -4,8 +4,9 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useAtom } from "jotai";
 import { newsletterSlugAtom } from "@/store/newsletter";
-import { checkNewsletter } from "@/actions";
+import { NewsletterDetail } from "@/actions";
 import { toast } from "sonner";
+import { Newsletter } from "@/components/newsletter";
 
 export default function NewsletterPage() {
   const { slug } = useParams();
@@ -18,7 +19,7 @@ export default function NewsletterPage() {
     setNewsletterSlug(slug.toString());
 
     const fetchNewsletter = async () => {
-      const res = await checkNewsletter({ newsletterSlug: slug.toString() });
+      const res = await NewsletterDetail({ newsletterSlug: slug.toString() });
 
       if (res.isOwner === false || res.error) {
         toast.error("You do not have access to this newsletter");
@@ -31,8 +32,9 @@ export default function NewsletterPage() {
   }, [slug, setNewsletterSlug, router]);
 
   return (
-    <div>
-      {newsletterName ? <div>{newsletterName}</div> : <div>Loading...</div>}
+    <div className="p-10">
+      {newsletterName}
+      <Newsletter />
     </div>
   );
 }

@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import prisma from "@/db";
 
-export async function checkNewsletter({
+export async function NewsletterDetail({
   newsletterSlug,
 }: {
   newsletterSlug: string;
@@ -33,6 +33,7 @@ export async function checkNewsletter({
 
   return {
     isOwner: isOwner,
+    newsletter: newsletter,
     status: 200,
   };
 }

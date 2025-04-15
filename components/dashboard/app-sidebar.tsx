@@ -1,16 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {
-  Command,
-  Frame,
-  Map,
-  PieChart,
-  Mail,
-  Bot,
-  User,
-  Settings,
-} from "lucide-react";
+import { Frame, Map, PieChart, Mail, Bot, User, Settings } from "lucide-react";
 
 import { NavNewsletter } from "./nav-newsletter";
 import { NavProjects } from "./nav-projects";
@@ -18,25 +9,12 @@ import { NavUser } from "./nav-user";
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-} from "../ui/dropdown-menu";
 
 const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
   projects: [
     {
       name: "Design Engineering",
@@ -89,7 +67,7 @@ export function AppSidebar({
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            {type === "dasboard" && <NavUser user={data.user} />}
+            {type === "dasboard" && <NavUser />}
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>

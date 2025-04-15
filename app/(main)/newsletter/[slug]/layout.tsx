@@ -7,13 +7,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html>
-      <body>
-        <SidebarProvider>
-          <AppSidebar type="newsletter" />
-          <SidebarInset>{children}</SidebarInset>
-        </SidebarProvider>
-      </body>
-    </html>
+    <SidebarProvider>
+      <AppSidebar type="newsletter" />
+      <SidebarInset>{children}</SidebarInset>
+    </SidebarProvider>
   );
 }
