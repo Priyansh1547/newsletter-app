@@ -35,7 +35,7 @@ export async function sendEmail(data: SendData) {
   }
 
   const batchPayload = newsletter.subscribers.map((sub) => ({
-    from: "onboarding@resend.dev", // use verfied domain this won't work
+    from: `${newsletter.name} <${newsletter.slug}@pitara-fashion.com>`,
     to: [sub.email],
     subject: data.subject,
     html: data.content,
