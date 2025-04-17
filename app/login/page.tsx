@@ -32,7 +32,7 @@ export default function LoginPage() {
         <h1 className="text-3xl font-bold mb-6">Continue to Stack Mail</h1>
         <Button
           variant="outline"
-          className="w-full duration-300 hover:-translate-y-2 hover:border-primary/30 h-10 bg-gray-100"
+          className="w-full duration-300 hover:-translate-y-2 hover:cursor-pointer h-10 bg-gray-100"
           onClick={async () => {
             toast.loading("Redirecting");
             signIn("google");
