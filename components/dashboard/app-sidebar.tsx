@@ -1,7 +1,16 @@
 "use client";
 
 import * as React from "react";
-import { Frame, Map, PieChart, Mail, Bot, User, Settings } from "lucide-react";
+import {
+  Frame,
+  Map,
+  PieChart,
+  Mail,
+  Bot,
+  User,
+  Settings,
+  Sparkles,
+} from "lucide-react";
 
 import { NavNewsletter } from "./nav-newsletter";
 import { NavProjects } from "./nav-projects";
@@ -34,12 +43,17 @@ const data = {
   ],
   newsletter: [
     {
-      name: "Email",
-      url: "email",
+      name: "Newsletters",
+      url: "",
+      icon: Sparkles,
+    },
+    {
+      name: "Send Mail",
+      url: "create",
       icon: Mail,
     },
     {
-      name: "User",
+      name: "Users",
       url: "user",
       icon: User,
     },
@@ -63,7 +77,7 @@ export function AppSidebar({
   type: "dasboard" | "newsletter";
 }) {
   return (
-    <Sidebar variant="sidebar" {...props} className="border-none">
+    <Sidebar variant="floating" {...props} className="border-none">
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>

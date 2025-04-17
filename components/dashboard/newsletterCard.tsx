@@ -1,6 +1,6 @@
 "use client";
 
-import { NewsletterResponse } from "@/types/NewsletterResponse";
+import { NewsletterResponse } from "@/types";
 import { AlertTriangle, MoreVertical } from "lucide-react";
 import Link from "next/link";
 import {
