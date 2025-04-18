@@ -17,7 +17,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { Skeleton } from "@/components/ui/skeleton";
 
 function NavUserSkeleton() {
@@ -29,7 +29,7 @@ function NavUserSkeleton() {
         <Skeleton className="h-4 w-28 rounded" />
         <Skeleton className="h-3 w-40 rounded" />
       </div>
-      <ChevronDown className="ml-auto size-4 text-muted-foreground" />
+      <ChevronDown className="ml-auto size-4" />
     </div>
   );
 }
@@ -95,7 +95,7 @@ export function NavUser() {
                 <Users className="mr-2 h-4 w-4" />
                 Community
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => signOut()}>
                 <LogOut className="mr-2 h-4 w-4" />
                 Logout
               </DropdownMenuItem>

@@ -1,15 +1,15 @@
 "use client";
 
-import { type LucideIcon } from "lucide-react";
+import { ArrowLeft, type LucideIcon } from "lucide-react";
 import { useAtomValue } from "jotai";
 import { newsletterSlugAtom } from "@/store/newsletter";
 import {
   SidebarGroup,
-  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import Link from "next/link";
 
 export function NavNewsletter({
   newsletter,
@@ -19,16 +19,23 @@ export function NavNewsletter({
   const newsletterSlug = useAtomValue(newsletterSlugAtom);
 
   return (
-    <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-      <SidebarGroupLabel>Newsletter</SidebarGroupLabel>
-      <SidebarMenu>
+    <SidebarGroup className="group-data-[collapsible=icon]:hidden py-0 px-2.5">
+      <SidebarMenu className="">
+        <SidebarMenuItem>
+          <SidebarMenuButton asChild>
+            <Link href={`/dashboard`}>
+              <ArrowLeft />
+              <span>Back</span>
+            </Link>
+          </SidebarMenuButton>
+        </SidebarMenuItem>
         {newsletter.map((item) => (
           <SidebarMenuItem key={item.name}>
             <SidebarMenuButton asChild>
-              <a href={`${newsletterSlug}/${item.url}`}>
+              <Link href={`/newsletter/${newsletterSlug}/${item.url}`}>
                 <item.icon />
                 <span>{item.name}</span>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         ))}

@@ -59,12 +59,12 @@ const data = {
     },
     {
       name: "Newsletter page",
-      url: "email",
+      url: "builder",
       icon: Bot,
     },
     {
       name: "Setting",
-      url: "email",
+      url: "setting",
       icon: Settings,
     },
   ],
