@@ -35,7 +35,7 @@ export default function RootLayout({
           <NextTopLoader showSpinner={false} color="#000000" shadow={false} />
           {children}
         </Provider>
-        <Toaster />
+        <Toaster theme="light" />
       </body>
     </html>
   );

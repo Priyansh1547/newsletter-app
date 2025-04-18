@@ -52,24 +52,29 @@ export function CreateNewsletterCard() {
     setIsChecking(true);
     setError(null);
 
+    const slugifySlug = slugify(values.slug);
+
+    const newsletter = createNewsletter({
+      name: values.name,
+      slug: slugifySlug,
+    });
+
+    toast.promise(newsletter, {
+      loading: "Creating newsletter...",
+      success: () => {
+        router.push(`/newsletter/${values.name}`);
+        return "Newsletter created successfully!";
+      },
+      error: (err) => {
+        const message =
+          err?.error || "Failed to create newsletter. Please try again.";
+        setError(message);
+        return message;
+      },
+    });
+
     try {
-      const slugifySlug = slugify(values.slug);
-      const response = await createNewsletter({
-        name: values.name,
-        slug: slugifySlug,
-      });
-
-      if (response.error) {
-        setError(response.error);
-        toast.error(response.error);
-        return;
-      }
-
-      toast.success("Newsletter created successfully!");
-      router.push(`/newsletter/${values.name}`);
-    } catch (e) {
-      setError(`Failed to create workspace. Please try again. ${e}`);
-      toast.error(`Failed to create workspace. Please try again.`);
+      await newsletter;
     } finally {
       setIsChecking(false);
     }

@@ -20,17 +20,21 @@ export function NewsletterCard({
   onDelete?: (id: string) => void;
 }) {
   const handleDelete = async () => {
-    const res = await deleteNewsletter({
+    const removeNewsletter = deleteNewsletter({
       name: newsletter.name,
       slug: newsletter.slug,
     });
 
-    if (res.error) {
-      toast.error("Fail to delete newsletter try again later");
-    } else {
-      toast.success("deleted newsletter");
-      onDelete?.(newsletter.id);
-    }
+    toast.promise(removeNewsletter, {
+      loading: "Deleting newsletter",
+      success: () => {
+        onDelete?.(newsletter.id);
+        return "Newsletter Deleted";
+      },
+      error: "Fail to delete newsletter try again later",
+    });
+
+    await removeNewsletter;
   };
 
   return (

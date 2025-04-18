@@ -23,7 +23,6 @@ export default function NewsletterPage() {
 
       if (res.isOwner === false || res.error) {
         toast.error("You do not have access to this newsletter");
-
         router.push("/dashboard");
       }
     };
