@@ -90,7 +90,6 @@ export default function MenuBar({ editor }: { editor: Editor | null }) {
           key={index}
           pressed={option.preesed}
           onPressedChange={option.onClick}
-          className="hover:bg-gray-100"
         >
           {option.icon}
         </Toggle>
