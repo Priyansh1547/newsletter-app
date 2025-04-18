@@ -53,28 +53,33 @@ export function CreateNewsletterCard() {
     setError(null);
 
     const slugifySlug = slugify(values.slug);
-
-    const newsletter = createNewsletter({
-      name: values.name,
-      slug: slugifySlug,
-    });
-
-    toast.promise(newsletter, {
-      loading: "Creating newsletter...",
-      success: () => {
-        router.push(`/newsletter/${values.name}`);
-        return "Newsletter created successfully!";
-      },
-      error: (err) => {
-        const message =
-          err?.error || "Failed to create newsletter. Please try again.";
-        setError(message);
-        return message;
-      },
-    });
+    const toastId = toast.loading("Creating newsletter...");
 
     try {
-      await newsletter;
+      const result = await createNewsletter({
+        name: values.name,
+        slug: slugifySlug,
+      });
+
+      if (result?.error) {
+        setError(result.error);
+        toast.error(result.error, {
+          id: toastId,
+        });
+        return;
+      }
+
+      toast.success("Newsletter created successfully!", {
+        id: toastId,
+      });
+
+      router.push(`/newsletter/${values.name}`);
+    } catch (e) {
+      console.error("Unexpected error:", e);
+      toast.error("Something went wrong. Please try again.", {
+        id: toastId,
+      });
+      setError("Unexpected error. Please try again.");
     } finally {
       setIsChecking(false);
     }

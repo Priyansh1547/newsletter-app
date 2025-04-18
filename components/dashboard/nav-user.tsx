@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/sidebar";
 import { signOut, useSession } from "next-auth/react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { toast } from "sonner";
 
 function NavUserSkeleton() {
   return (
@@ -95,7 +96,18 @@ export function NavUser() {
                 <Users className="mr-2 h-4 w-4" />
                 Community
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => signOut()}>
+              <DropdownMenuItem
+                onClick={async () => {
+                  const logout = signOut();
+
+                  toast.promise(logout, {
+                    loading: "logout...",
+                    success: "logged out",
+                  });
+
+                  await logout;
+                }}
+              >
                 <LogOut className="mr-2 h-4 w-4" />
                 Logout
               </DropdownMenuItem>

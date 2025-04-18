@@ -34,8 +34,14 @@ export default function LoginPage() {
           variant="outline"
           className="w-full duration-300 hover:-translate-y-2 hover:cursor-pointer h-10 bg-gray-100"
           onClick={async () => {
-            toast.loading("Redirecting");
-            signIn("google");
+            const login = signIn("google");
+
+            toast.promise(login, {
+              loading: "Redirecting...",
+              success: "Redirected",
+            });
+
+            await login;
           }}
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
