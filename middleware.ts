@@ -1,20 +1,16 @@
-import { withAuth } from "next-auth/middleware";
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { getSessionCookie } from "better-auth/cookies";
 
-export default withAuth(
-  function middleware(req: NextRequest) {
-    return NextResponse.next();
-  },
-  {
-    callbacks: {
-      authorized: ({ token }) => {
-        return !!token;
-      },
-    },
+export async function middleware(request: NextRequest) {
+  const sessionCookie = getSessionCookie(request);
+
+  if (!sessionCookie) {
+    return NextResponse.redirect(new URL("/login", request.url));
   }
-);
+
+  return NextResponse.next();
+}
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/settings/:path*", "/newsletter/:path*"],
+  matcher: ["/dashboard/:path*", "/settings", "/newsletter/:path*"],
 };

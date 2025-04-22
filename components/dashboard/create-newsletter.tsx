@@ -110,7 +110,7 @@ export function CreateNewsletterCard() {
               Create a newsletter
             </DialogTitle>
             <DialogDescription className="text-center">
-              Subscribe to receive news and special offers.
+              Create a new newsletter with stack mail
             </DialogDescription>
           </DialogHeader>
         </div>

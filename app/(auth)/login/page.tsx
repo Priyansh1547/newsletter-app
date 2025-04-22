@@ -1,22 +1,20 @@
 "use client";
 import { ArrowLeft } from "lucide-react";
-import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { signIn } from "next-auth/react";
+import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
 
 export default function LoginPage() {
-  const session = useSession();
   const router = useRouter();
+  const session = authClient.useSession();
 
   useEffect(() => {
-    if (session) {
+    if (session.data?.session) {
       router.push("/dashboard");
     }
-  }, [session, router]);
-
+  }, [session.data?.session, router]);
   return (
     <div className="flex flex-col h-screen p-6 md:p-10 justify-center items-center">
       <div className="absolute top-6 left-6">
@@ -34,14 +32,17 @@ export default function LoginPage() {
           variant="outline"
           className="w-full duration-300 hover:-translate-y-2 hover:cursor-pointer h-10 bg-gray-100"
           onClick={async () => {
-            const login = signIn("google");
-
-            toast.promise(login, {
-              loading: "Redirecting...",
-              success: "Redirected",
-            });
-
-            await login;
+            toast.promise(
+              authClient.signIn.social({
+                provider: "google",
+                callbackURL: "/dashboard",
+              }),
+              {
+                loading: "Redirecting...",
+                success: "Redirected successfully!",
+                error: "Login redirect failed",
+              }
+            );
           }}
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">

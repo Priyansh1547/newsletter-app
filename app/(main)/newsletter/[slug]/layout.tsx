@@ -1,6 +1,6 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useAtom } from "jotai";
 import { newsletterSlugAtom } from "@/store/newsletter";
@@ -8,7 +8,6 @@ import { AppSidebar } from "@/components/dashboard/app-sidebar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { NewsletterDetail } from "@/actions";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 
 export default function RootLayout({
   children,

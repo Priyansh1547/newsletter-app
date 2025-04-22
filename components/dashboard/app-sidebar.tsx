@@ -1,16 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {
-  Frame,
-  Map,
-  PieChart,
-  Mail,
-  Bot,
-  User,
-  Settings,
-  Sparkles,
-} from "lucide-react";
+import { PieChart, Mail, Bot, User, Settings, Sparkles } from "lucide-react";
 
 import { NavNewsletter } from "./nav-newsletter";
 import { NavProjects } from "./nav-projects";
@@ -26,9 +17,9 @@ import {
 const data = {
   projects: [
     {
-      name: "Design Engineering",
-      url: "#",
-      icon: Frame,
+      name: "Newsletters",
+      url: "",
+      icon: Sparkles,
     },
     {
       name: "Sales & Marketing",
@@ -36,9 +27,9 @@ const data = {
       icon: PieChart,
     },
     {
-      name: "Travel",
-      url: "#",
-      icon: Map,
+      name: "setting",
+      url: "/dashboard/setting",
+      icon: Settings,
     },
   ],
   newsletter: [
