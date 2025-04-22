@@ -1,7 +1,7 @@
 "use server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
 import prisma from "@/db";
+import { headers } from "next/headers";
+import { auth } from "@/lib/auth";
 
 interface Data {
   name: string;
@@ -9,7 +9,8 @@ interface Data {
 }
 
 export async function createNewsletter(data: Data) {
-  const session = await getServerSession(authOptions);
+  const headersList = await headers();
+  const session = await auth.api.getSession({ headers: headersList });
 
   if (!session || !session.user?.email) {
     return { error: "Unauthorized" };

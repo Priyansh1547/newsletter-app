@@ -1,7 +1,7 @@
 "use server";
 
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { headers } from "next/headers";
+import { auth } from "@/lib/auth";
 import prisma from "@/db";
 import { Resend } from "resend";
 
@@ -14,7 +14,8 @@ interface SendData {
 }
 
 export async function sendEmail(data: SendData) {
-  const session = await getServerSession(authOptions);
+  const headersList = await headers();
+  const session = await auth.api.getSession({ headers: headersList });
 
   if (!session || !session.user?.email) {
     return { error: "Unauthorized", status: 401 };

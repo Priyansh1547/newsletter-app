@@ -1,7 +1,6 @@
 "use client";
 
 import { ChevronDown, LogOut, Moon, Users, Github } from "lucide-react";
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -17,9 +16,10 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { signOut, useSession } from "next-auth/react";
+import { signOut, useSession } from "@/lib/auth-client";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 function NavUserSkeleton() {
   return (
@@ -36,13 +36,27 @@ function NavUserSkeleton() {
 }
 
 export function NavUser() {
-  const { data: session, status } = useSession();
+  const { data: session, isPending } = useSession();
+  const router = useRouter();
 
-  if (status === "loading") return <NavUserSkeleton />;
+  if (isPending) return <NavUserSkeleton />;
   if (!session) return null;
 
   const { name, email, image } = session.user;
 
+  const handleLogout = async () => {
+    const logout = signOut();
+
+    toast.promise(logout, {
+      loading: "Logging out...",
+      success: "logged out",
+      error: "Something went wrong",
+    });
+
+    await logout;
+
+    router.push("/login");
+  };
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -54,7 +68,9 @@ export function NavUser() {
             >
               <Avatar className="h-8 w-8 rounded-md">
                 <AvatarImage src={image || ""} alt={name || "User"} />
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                <AvatarFallback className="rounded-lg">
+                  {name?.charAt(0)}
+                </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">{name}</span>
@@ -73,7 +89,9 @@ export function NavUser() {
               <div className="flex flex-col items-center text-center">
                 <Avatar className="h-12 w-12 rounded-lg mb-2">
                   <AvatarImage src={image!} alt={name || "User"} />
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                  <AvatarFallback className="rounded-lg">
+                    {name?.charAt(0)}
+                  </AvatarFallback>
                 </Avatar>
                 <div className="text-sm font-medium">{name}</div>
                 <div className="text-xs text-muted-foreground">{email}</div>
@@ -96,18 +114,7 @@ export function NavUser() {
                 <Users className="mr-2 h-4 w-4" />
                 Community
               </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={async () => {
-                  const logout = signOut();
-
-                  toast.promise(logout, {
-                    loading: "logout...",
-                    success: "logged out",
-                  });
-
-                  await logout;
-                }}
-              >
+              <DropdownMenuItem onClick={handleLogout}>
                 <LogOut className="mr-2 h-4 w-4" />
                 Logout
               </DropdownMenuItem>
