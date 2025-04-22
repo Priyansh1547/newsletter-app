@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/sidebar";
 
 const data = {
-  projects: [
+  core: [
     {
       name: "Newsletters",
       url: "",
@@ -50,7 +50,7 @@ const data = {
     },
     {
       name: "Newsletter page",
-      url: "builder",
+      url: "page",
       icon: Bot,
     },
     {
@@ -79,7 +79,7 @@ export function AppSidebar({
 
       <SidebarContent>
         {type === "dasboard" ? (
-          <NavProjects projects={data.projects} />
+          <NavProjects projects={data.core} />
         ) : (
           <NavNewsletter newsletter={data.newsletter} />
         )}
