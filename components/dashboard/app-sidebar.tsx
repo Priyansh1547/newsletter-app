@@ -50,7 +50,7 @@ const data = {
     },
     {
       name: "Newsletter page",
-      url: "page",
+      url: "builder",
       icon: Bot,
     },
     {

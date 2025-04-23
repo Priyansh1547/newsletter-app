@@ -92,10 +92,12 @@ model Newsletter {
 
 model NewsletterPage {
   id           Int        @id @default(autoincrement())
+  title        String
   description  String?
   themeColor   String
   ctaText      String
   newsletterId String
+  slug         String
   newsletter   Newsletter @relation(fields: [newsletterId], references: [id])
 }
 
