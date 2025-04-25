@@ -6,7 +6,7 @@ import { useAtom } from "jotai";
 import { newsletterSlugAtom } from "@/store/newsletter";
 import { AppSidebar } from "@/components/dashboard/app-sidebar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { NewsletterDetail } from "@/actions";
+import { newsletterDetail } from "@/actions";
 import { toast } from "sonner";
 import { useParams } from "next/navigation";
 
@@ -21,7 +21,7 @@ export function AppLayoutShell({ children }: { children: React.ReactNode }) {
     setNewsletterSlug(slug.toString());
 
     const fetchNewsletter = async () => {
-      const res = await NewsletterDetail({ newsletterSlug: slug.toString() });
+      const res = await newsletterDetail({ newsletterSlug: slug.toString() });
 
       if (res.isOwner === false || res.error) {
         toast.error("You do not have access to this newsletter");

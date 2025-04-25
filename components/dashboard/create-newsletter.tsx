@@ -45,7 +45,6 @@ export function CreateNewsletterCard() {
       name: "",
       slug: "",
     },
-    mode: "onChange",
   });
 
   const onSubmit = async (values: Newsletter) => {
@@ -128,7 +127,10 @@ export function CreateNewsletterCard() {
                       <Input
                         placeholder="Acme, Inc."
                         {...field}
-                        onChange={handleNameChange}
+                        onChange={(e) => {
+                          handleNameChange(e);
+                          field.onChange(e);
+                        }}
                         className="rounded-md border-gray-300"
                       />
                     </FormControl>
