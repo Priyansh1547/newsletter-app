@@ -26,6 +26,9 @@ export async function builder(data: BuilderData): Promise<BuilderReturn> {
   try {
     const newsletter = await prisma.newsletter.findFirst({
       where: { slug: data.slug },
+      include: {
+        newsletterPage: true,
+      },
     });
 
     if (!newsletter) {
@@ -35,7 +38,15 @@ export async function builder(data: BuilderData): Promise<BuilderReturn> {
         description: "Newsletter not found",
       };
     }
-    
+
+    if (newsletter.newsletterPage.length === 1) {
+      return {
+        error: true,
+        message: "Uh oh!",
+        description: "You already have a website for this newsletter",
+      };
+    }
+
     const newsletterPage = await prisma.newsletterPage.create({
       data: {
         title: data.title,
@@ -43,6 +54,7 @@ export async function builder(data: BuilderData): Promise<BuilderReturn> {
         ctaText: data.cta,
         themeColor: data.themeColor,
         slug: data.slug,
+        footer: data.footer,
         newsletterId: newsletter.id,
       },
     });

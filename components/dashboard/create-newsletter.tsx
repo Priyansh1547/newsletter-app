@@ -74,7 +74,6 @@ export function CreateNewsletterCard() {
 
       router.push(`/newsletter/${values.name}`);
     } catch (e) {
-      console.error("Unexpected error:", e);
       toast.error("Something went wrong. Please try again.", {
         id: toastId,
       });
