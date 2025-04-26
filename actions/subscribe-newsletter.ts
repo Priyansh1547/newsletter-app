@@ -9,12 +9,24 @@ interface SubscribeNewsletterData {
   slug: string;
 }
 
-export async function subscribeNewsletter(data: SubscribeNewsletterData) {
+interface SubscribeNewsletterReturn {
+  message: string;
+  error: boolean;
+  description: string;
+}
+
+export async function subscribeNewsletter(
+  data: SubscribeNewsletterData
+): Promise<SubscribeNewsletterReturn> {
   const headersList = await headers();
   const session = await auth.api.getSession({ headers: headersList });
 
   if (!session || !session.user?.email) {
-    return { error: "Unauthorized", status: 401 };
+    return {
+      error: true,
+      message: "Uh oh!",
+      description: "you need to sign in",
+    };
   }
 
   const newsletter = await prisma.newsletter.findFirst({
@@ -24,7 +36,11 @@ export async function subscribeNewsletter(data: SubscribeNewsletterData) {
   });
 
   if (!newsletter) {
-    return { error: "Newsletter not found", status: 404 };
+    return {
+      error: true,
+      message: "Uh oh!",
+      description: "Newsletter not found",
+    };
   }
 
   const existingSubscriber = await prisma.subscriber.findFirst({
@@ -35,7 +51,11 @@ export async function subscribeNewsletter(data: SubscribeNewsletterData) {
   });
 
   if (existingSubscriber) {
-    return { message: "Already subscribed", status: 200 };
+    return {
+      error: true,
+      message: "Error!",
+      description: "You have already subscriber to this newsletter",
+    };
   }
 
   await prisma.subscriber.create({
@@ -46,7 +66,8 @@ export async function subscribeNewsletter(data: SubscribeNewsletterData) {
   });
 
   return {
-    message: `Subscribed to newsletter ${newsletter.name}`,
-    status: 200,
+    error: false,
+    message: `Success!`,
+    description: `Subscribed to the newsletter ${newsletter.name}`,
   };
 }
