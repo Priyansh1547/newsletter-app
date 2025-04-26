@@ -98,6 +98,7 @@ model NewsletterPage {
   ctaText      String
   newsletterId String
   slug         String
+  footer       String
   newsletter   Newsletter @relation(fields: [newsletterId], references: [id])
 }
 

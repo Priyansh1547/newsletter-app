@@ -3,3 +3,4 @@ export * from "./delete-newsletters";
 export * from "./getNewsletters";
 export * from "./newsletterDetail";
 export * from "./send-email";
+export * from "./builder";

@@ -11,9 +11,7 @@ interface BuilderReturn {
   description: string;
 }
 
-export default async function Builder(
-  data: BuilderData
-): Promise<BuilderReturn> {
+export async function builder(data: BuilderData): Promise<BuilderReturn> {
   const headersList = await headers();
   const session = await auth.api.getSession({ headers: headersList });
 
@@ -28,6 +26,9 @@ export default async function Builder(
   try {
     const newsletter = await prisma.newsletter.findFirst({
       where: { slug: data.slug },
+      include: {
+        newsletterPage: true,
+      },
     });
 
     if (!newsletter) {
@@ -38,6 +39,14 @@ export default async function Builder(
       };
     }
 
+    if (newsletter.newsletterPage.length === 1) {
+      return {
+        error: true,
+        message: "Uh oh!",
+        description: "You already have a website for this newsletter",
+      };
+    }
+
     const newsletterPage = await prisma.newsletterPage.create({
       data: {
         title: data.title,
@@ -45,6 +54,7 @@ export default async function Builder(
         ctaText: data.cta,
         themeColor: data.themeColor,
         slug: data.slug,
+        footer: data.footer,
         newsletterId: newsletter.id,
       },
     });

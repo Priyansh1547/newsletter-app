@@ -5,10 +5,14 @@ export const builderSchema = z.object({
   description: z
     .string()
     .min(10, { message: "Description must contain 10 characters" })
-    .optional(),
+    .optional()
+    .or(z.literal("")),
   cta: z.string().min(5, { message: "CTA must be at least 5 characters" }),
-  themeColor: z.string(),
-  slug: z.string(),
+  themeColor: z.enum(["orange", "amber", "white", "blue", "indigo", "pink"], {
+    message: "select at least one theme color",
+  }),
+  slug: z.string().min(3, { message: "Slug must be 3 character" }),
+  footer: z.string().min(3, { message: "Footer must be 3 characters" }),
 });
 
 export type BuilderData = z.infer<typeof builderSchema>;

@@ -45,7 +45,6 @@ export function CreateNewsletterCard() {
       name: "",
       slug: "",
     },
-    mode: "onChange",
   });
 
   const onSubmit = async (values: Newsletter) => {
@@ -75,7 +74,6 @@ export function CreateNewsletterCard() {
 
       router.push(`/newsletter/${values.name}`);
     } catch (e) {
-      console.error("Unexpected error:", e);
       toast.error("Something went wrong. Please try again.", {
         id: toastId,
       });
@@ -128,7 +126,10 @@ export function CreateNewsletterCard() {
                       <Input
                         placeholder="Acme, Inc."
                         {...field}
-                        onChange={handleNameChange}
+                        onChange={(e) => {
+                          handleNameChange(e);
+                          field.onChange(e);
+                        }}
                         className="rounded-md border-gray-300"
                       />
                     </FormControl>
