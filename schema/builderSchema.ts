@@ -12,7 +12,6 @@ export const builderSchema = z.object({
     message: "select at least one theme color",
   }),
   slug: z.string().min(3, { message: "Slug must be 3 character" }),
-  footer: z.string().min(3, { message: "Footer must be 3 characters" }),
 });
 
 export type BuilderData = z.infer<typeof builderSchema>;

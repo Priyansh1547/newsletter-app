@@ -37,7 +37,6 @@ export function BuilderCommponent() {
       cta: "",
       themeColor: "orange",
       slug: newsletterSlug,
-      footer: `${newsletterSlug} © ${new Date().getFullYear()}`,
     },
   });
 
@@ -207,26 +206,6 @@ export function BuilderCommponent() {
                         <FormControl>
                           <Input
                             placeholder="Subcribe to newsletter"
-                            className="bg-white rounded-sm"
-                            {...field}
-                            onChange={(e) => {
-                              field.onChange(e);
-                            }}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="footer"
-                    render={({ field }) => (
-                      <FormItem>
-                        <Label>Footer</Label>
-                        <FormControl>
-                          <Input
                             className="bg-white rounded-sm"
                             {...field}
                             onChange={(e) => {

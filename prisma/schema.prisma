@@ -98,7 +98,6 @@ model NewsletterPage {
   ctaText      String
   newsletterId String
   slug         String
-  footer       String
   newsletter   Newsletter @relation(fields: [newsletterId], references: [id])
 }
 
@@ -116,6 +115,4 @@ model Subscriber {
   email        String
   newsletterId String
   newsletter   Newsletter @relation(fields: [newsletterId], references: [id])
-
-  @@unique([email, newsletterId])
 }

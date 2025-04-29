@@ -54,7 +54,6 @@ export async function builder(data: BuilderData): Promise<BuilderReturn> {
         ctaText: data.cta,
         themeColor: data.themeColor,
         slug: data.slug,
-        footer: data.footer,
         newsletterId: newsletter.id,
       },
     });
