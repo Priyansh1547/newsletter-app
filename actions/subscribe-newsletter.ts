@@ -54,7 +54,7 @@ export async function subscribeNewsletter(
     return {
       error: true,
       message: "Error!",
-      description: "You have already subscriber to this newsletter",
+      description: "You have already a subscriber to this newsletter",
     };
   }
 
