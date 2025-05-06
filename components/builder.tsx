@@ -53,7 +53,6 @@ export function BuilderCommponent() {
         cta: value.cta,
         themeColor: value.themeColor,
         slug: value.slug,
-        footer: value.footer,
       });
 
       if (result?.error) {
