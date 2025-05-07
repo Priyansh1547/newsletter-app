@@ -18,7 +18,7 @@ const data = {
   core: [
     {
       name: "Newsletters",
-      url: "",
+      url: "/dashboard",
       icon: Sparkles,
     },
     {
@@ -27,8 +27,8 @@ const data = {
       icon: PieChart,
     },
     {
-      name: "setting",
-      url: "/dashboard/setting",
+      name: "settings",
+      url: "/dashboard/settings",
       icon: Settings,
     },
   ],
