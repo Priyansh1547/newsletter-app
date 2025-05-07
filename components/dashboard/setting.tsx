@@ -1,10 +1,10 @@
 "use client";
 
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { useSession } from "@/lib/auth-client";
 
-export default function SettingsComponent() {
+export function SettingsComponent() {
   const { data: session, isPending } = useSession();
 
   if (isPending)

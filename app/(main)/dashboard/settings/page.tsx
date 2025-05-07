@@ -1,4 +1,4 @@
-import SettingsComponent from "@/components/setting";
+import { SettingsComponent } from "@/components/dashboard/setting";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
