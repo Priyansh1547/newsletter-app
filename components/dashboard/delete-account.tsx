@@ -12,9 +12,44 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { deleteAccount } from "@/actions";
+import { toast } from "sonner";
+import { signOut } from "@/lib/auth-client";
 
 export function DeleteAccount() {
   const [inputValue, setInputValue] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handelDelete = async () => {
+    setLoading(true);
+    const toastId = toast.loading("Deleting...");
+
+    try {
+      const res = await deleteAccount();
+
+      if (res.error) {
+        toast.error(`${res.description}`, {
+          id: toastId,
+        });
+        return;
+      }
+
+      toast.success(`${res.description}`, {
+        id: toastId,
+      });
+
+      await signOut();
+
+      setInputValue("");
+    } catch (e) {
+      console.error("Account deletion failed:", e);
+      toast.error("Something went wrong. Please try again.", {
+        id: toastId,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <Dialog>
@@ -39,7 +74,7 @@ export function DeleteAccount() {
               placeholder="Type 'Delete' to confirm"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              className="h-10 shadow-none rounded-sm transition-colors duration-150 hover:border-gray-500 focus:border-gray-500 focus-visible:ring-0 focus-visible:border-gray-500"
+              className="h-10"
             />
           </div>
           <DialogFooter>
@@ -50,8 +85,10 @@ export function DeleteAccount() {
             </DialogClose>
             <Button
               type="button"
-              className="bg-black rounded-sm hover:bg-black/80"
-              disabled={inputValue !== "Delete"}
+              className="rounded-sm"
+              variant="dark"
+              disabled={inputValue !== "Delete" || loading}
+              onClick={handelDelete}
             >
               DELETE
             </Button>

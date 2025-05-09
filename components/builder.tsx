@@ -112,7 +112,7 @@ export function BuilderCommponent() {
                         <Label>Slug</Label>
                         <FormControl>
                           <div className="flex rounded-md shadow-xs">
-                            <span className="border-input inline-flex items-center rounded-s-sm border px-2 text-sm text-gray-600/90">
+                            <span className="border-[#b1b7b9] inline-flex items-center rounded-s-sm border px-2 text-sm text-gray-600/90">
                               stackmail.vercel.app/
                             </span>
                             <Input

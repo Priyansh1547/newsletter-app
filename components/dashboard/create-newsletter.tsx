@@ -68,7 +68,7 @@ export function CreateNewsletterCard() {
         return;
       }
 
-      toast.success("Newsletter created successfully!", {
+      toast.success(`${result.message}`, {
         id: toastId,
       });
 
@@ -130,7 +130,7 @@ export function CreateNewsletterCard() {
                           handleNameChange(e);
                           field.onChange(e);
                         }}
-                        className="rounded-md border-gray-300"
+                        className="rounded-md"
                       />
                     </FormControl>
                     <FormMessage />
@@ -151,7 +151,7 @@ export function CreateNewsletterCard() {
                           setError(null);
                           field.onChange(e);
                         }}
-                        className="rounded-md border-gray-300"
+                        className="rounded-md"
                       />
                     </FormControl>
                     <FormMessage />

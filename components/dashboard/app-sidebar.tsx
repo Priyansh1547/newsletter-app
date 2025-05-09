@@ -5,7 +5,7 @@ import { PieChart, Mail, Bot, User, Settings, Sparkles } from "lucide-react";
 
 import { NavNewsletter } from "./nav-newsletter";
 import { NavProjects } from "./nav-projects";
-import { NavUser } from "./nav-user";
+import { NavUser } from "./nav-user"; // Ensure NavUser is memoized here
 import {
   Sidebar,
   SidebarContent,
@@ -65,7 +65,7 @@ export function AppSidebar({
   type,
   ...props
 }: {
-  type: "dasboard" | "newsletter";
+  type: "dashboard" | "newsletter"; // Fixed typo here (dasboard -> dashboard)
 }) {
   return (
     <Sidebar variant="floating" {...props} className="border-none">
@@ -78,7 +78,7 @@ export function AppSidebar({
       </SidebarHeader>
 
       <SidebarContent>
-        {type === "dasboard" ? (
+        {type === "dashboard" ? (
           <NavProjects projects={data.core} />
         ) : (
           <NavNewsletter newsletter={data.newsletter} />

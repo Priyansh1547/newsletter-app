@@ -24,6 +24,17 @@ export async function createNewsletter(data: Data) {
     return { error: "Newsletter slug already exists", status: 409 };
   }
 
+  const allNewsletter = await prisma.newsletter.findMany({
+    where: { user: session.user },
+  });
+
+  if (allNewsletter.length === 5) {
+    return {
+      error: "Maximum newsletter reached",
+      status: 406,
+    };
+  }
+
   const newsletter = await prisma.newsletter.create({
     data: {
       name: data.name,
@@ -32,5 +43,9 @@ export async function createNewsletter(data: Data) {
     },
   });
 
-  return { newsletters: newsletter, status: 201 };
+  return {
+    newsletters: newsletter,
+    message: "Newsletter Created Successfully!",
+    status: 201,
+  };
 }
