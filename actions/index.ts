@@ -5,3 +5,4 @@ export * from "./newsletterDetail";
 export * from "./send-email";
 export * from "./builder";
 export * from "./subscribe-newsletter";
+export * from "./delete-account";
