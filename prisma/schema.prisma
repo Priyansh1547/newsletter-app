@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
   output   = "../node_modules/.prisma/client"
@@ -70,9 +64,8 @@ model Verification {
   identifier String
   value      String
   expiresAt  DateTime
-
-  createdAt DateTime?
-  updatedAt DateTime?
+  createdAt  DateTime?
+  updatedAt  DateTime?
 
   @@map("verification")
 }
@@ -83,7 +76,7 @@ model Newsletter {
   slug           String           @unique
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
-  user           User             @relation(fields: [userId], references: [id])
+  user           User             @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId         String
   emails         Email[]          @relation("NewsletterEmails")
   subscribers    Subscriber[]
@@ -98,7 +91,7 @@ model NewsletterPage {
   ctaText      String
   newsletterId String
   slug         String
-  newsletter   Newsletter @relation(fields: [newsletterId], references: [id])
+  newsletter   Newsletter @relation(fields: [newsletterId], references: [id], onDelete: Cascade)
 }
 
 model Email {
@@ -107,7 +100,7 @@ model Email {
   content      String
   sentAt       DateTime   @default(now())
   newsletterId String
-  newsletter   Newsletter @relation("NewsletterEmails", fields: [newsletterId], references: [id])
+  newsletter   Newsletter @relation("NewsletterEmails", fields: [newsletterId], references: [id], onDelete: Cascade)
 }
 
 model Subscriber {
@@ -115,5 +108,5 @@ model Subscriber {
   email        String
   isVerified   Boolean    @default(false)
   newsletterId String
-  newsletter   Newsletter @relation(fields: [newsletterId], references: [id])
+  newsletter   Newsletter @relation(fields: [newsletterId], references: [id], onDelete: Cascade)
 }

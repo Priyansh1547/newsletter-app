@@ -1,8 +1,6 @@
 "use server";
 
 import prisma from "@/db";
-import { headers } from "next/headers";
-import { auth } from "@/lib/auth";
 
 interface SubscribeNewsletterData {
   email: string;
@@ -18,17 +16,6 @@ interface SubscribeNewsletterReturn {
 export async function subscribeNewsletter(
   data: SubscribeNewsletterData
 ): Promise<SubscribeNewsletterReturn> {
-  const headersList = await headers();
-  const session = await auth.api.getSession({ headers: headersList });
-
-  if (!session || !session.user?.email) {
-    return {
-      error: true,
-      message: "Uh oh!",
-      description: "you need to sign in",
-    };
-  }
-
   const newsletter = await prisma.newsletter.findFirst({
     where: {
       slug: data.slug,
@@ -54,7 +41,7 @@ export async function subscribeNewsletter(
     return {
       error: true,
       message: "Error!",
-      description: "You have already a subscriber to this newsletter",
+      description: "You have already subscribed to this newsletter",
     };
   }
 

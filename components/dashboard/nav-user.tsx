@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDown, LogOut, Moon, Users, Github } from "lucide-react";
+import { ChevronDown, LogOut, Moon, Users } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -20,6 +20,9 @@ import { signOut, useSession } from "@/lib/auth-client";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { useAtom } from "jotai";
+import { userAtom } from "@/store/user";
+import { useEffect } from "react";
 
 function NavUserSkeleton() {
   return (
@@ -37,12 +40,21 @@ function NavUserSkeleton() {
 
 export function NavUser() {
   const { data: session, isPending } = useSession();
+  const [user, setUser] = useAtom(userAtom);
   const router = useRouter();
+
+  useEffect(() => {
+    if (session) {
+      setUser({
+        name: session.user.name,
+        image: session.user.image || "",
+        email: session.user.email,
+      });
+    }
+  }, [session, setUser]);
 
   if (isPending) return <NavUserSkeleton />;
   if (!session) return null;
-
-  const { name, email, image } = session.user;
 
   const handleLogout = async () => {
     const logout = signOut();
@@ -57,6 +69,7 @@ export function NavUser() {
 
     router.push("/login");
   };
+
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -67,20 +80,20 @@ export function NavUser() {
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-md">
-                <AvatarImage src={image || ""} alt={name || "User"} />
+                <AvatarImage src={user.image} alt={user.name} />
                 <AvatarFallback className="rounded-lg">
-                  {name?.charAt(0)}
+                  {user.name?.charAt(0)}
                 </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">{name}</span>
-                <span className="truncate text-xs">{email}</span>
+                <span className="truncate font-semibold">{user.name}</span>
+                <span className="truncate text-xs">{user.email}</span>
               </div>
               <ChevronDown className="ml-auto size-4" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
-            className="w-64 rounded-xl border-none text-popover-foreground"
+            className="w-64 rounded-xl text-popover-foreground"
             side="bottom"
             align="start"
             sideOffset={4}
@@ -88,13 +101,15 @@ export function NavUser() {
             <DropdownMenuLabel className="p-4 pb-2 font-normal">
               <div className="flex flex-col items-center text-center">
                 <Avatar className="h-12 w-12 rounded-lg mb-2">
-                  <AvatarImage src={image!} alt={name || "User"} />
+                  <AvatarImage src={user.image} alt={user.name} />
                   <AvatarFallback className="rounded-lg">
-                    {name?.charAt(0)}
+                    {user.name?.charAt(0)}
                   </AvatarFallback>
                 </Avatar>
-                <div className="text-sm font-medium">{name}</div>
-                <div className="text-xs text-muted-foreground">{email}</div>
+                <div className="text-sm font-medium">{user.name}</div>
+                <div className="text-xs text-muted-foreground">
+                  {user.email}
+                </div>
               </div>
             </DropdownMenuLabel>
 
@@ -119,16 +134,6 @@ export function NavUser() {
                 Logout
               </DropdownMenuItem>
             </DropdownMenuGroup>
-
-            <DropdownMenuSeparator />
-
-            <DropdownMenuLabel className="text-xs text-muted-foreground">
-              additional
-            </DropdownMenuLabel>
-            <DropdownMenuItem>
-              <Github className="mr-2 h-4 w-4" />
-              Github
-            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>
