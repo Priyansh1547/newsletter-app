@@ -1,11 +1,11 @@
 "use client";
 
 import * as React from "react";
-import { PieChart, Mail, Bot, User, Settings, Sparkles } from "lucide-react";
+import { Mail, Bot, User, Settings, Sparkles } from "lucide-react";
 
 import { NavNewsletter } from "./nav-newsletter";
 import { NavProjects } from "./nav-projects";
-import { NavUser } from "./nav-user"; // Ensure NavUser is memoized here
+import { NavUser } from "./nav-user";
 import {
   Sidebar,
   SidebarContent,
@@ -22,11 +22,6 @@ const data = {
       icon: Sparkles,
     },
     {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
-    },
-    {
       name: "settings",
       url: "/dashboard/settings",
       icon: Settings,
@@ -35,7 +30,6 @@ const data = {
   newsletter: [
     {
       name: "Newsletters",
-      url: "",
       icon: Sparkles,
     },
     {
@@ -65,7 +59,7 @@ export function AppSidebar({
   type,
   ...props
 }: {
-  type: "dashboard" | "newsletter"; // Fixed typo here (dasboard -> dashboard)
+  type: "dashboard" | "newsletter";
 }) {
   return (
     <Sidebar variant="floating" {...props} className="border-none">
