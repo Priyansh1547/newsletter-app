@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -12,8 +13,8 @@ export default function Home() {
         </p>
 
         <div className="flex flex-col sm:flex-row justify-center gap-3">
-          <Button className="bg-gradient-to-r from-rose-100 to-teal-100 text-black shadow-md hover:cursor-pointer w-32">
-            <a href="https://github.com/Priyansh1547/stack-mail">Github</a>
+          <Button className="hover:cursor-pointer w-32" variant={"dark"}>
+            <Link href="/login">Get started</Link>
           </Button>
         </div>
       </div>
