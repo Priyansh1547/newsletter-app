@@ -1,8 +1,6 @@
 "use client";
 
 import { ArrowLeft, type LucideIcon } from "lucide-react";
-import { useAtomValue } from "jotai";
-import { newsletterSlugAtom } from "@/store/newsletter";
 import {
   SidebarGroup,
   SidebarMenu,
@@ -17,8 +15,8 @@ export function NavNewsletter({
 }: {
   newsletter: { name: string; icon: LucideIcon; url?: string }[];
 }) {
-  const newsletterSlug = useAtomValue(newsletterSlugAtom);
   const pathname = usePathname();
+  const slug = pathname.split("/")[2];
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden py-0 px-2.5">
@@ -37,15 +35,15 @@ export function NavNewsletter({
               asChild
               isActive={
                 item.url
-                  ? pathname === `/newsletter/${newsletterSlug}/${item.url}`
-                  : pathname === `/newsletter/${newsletterSlug}`
+                  ? pathname === `/newsletter/${slug}/${item.url}`
+                  : pathname === `/newsletter/${slug}`
               }
             >
               <Link
                 href={
                   item.url
-                    ? `/newsletter/${newsletterSlug}/${item.url}`
-                    : `/newsletter/${newsletterSlug}`
+                    ? `/newsletter/${slug}/${item.url}`
+                    : `/newsletter/${slug}`
                 }
               >
                 <item.icon />

@@ -8,8 +8,6 @@ import { ArrowRight, Loader2 } from "lucide-react";
 import { Textarea } from "./ui/textarea";
 import { useState } from "react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { useAtomValue } from "jotai";
-import { newsletterSlugAtom } from "@/store/newsletter";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BuilderData, builderSchema } from "@/schema/builderSchema";
@@ -22,12 +20,14 @@ import {
 } from "@/components/ui/form";
 import { toast } from "sonner";
 import { builder } from "@/actions";
+import { usePathname } from "next/navigation";
 
 export function BuilderCommponent() {
   const [step, setStep] = useState(1);
-  const newsletterSlug = useAtomValue(newsletterSlugAtom);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const pathname = usePathname();
+  const slug = pathname.split("/")[2];
 
   const form = useForm<BuilderData>({
     resolver: zodResolver(builderSchema),
@@ -36,7 +36,7 @@ export function BuilderCommponent() {
       description: "",
       cta: "",
       themeColor: "orange",
-      slug: newsletterSlug,
+      slug: slug,
     },
   });
 

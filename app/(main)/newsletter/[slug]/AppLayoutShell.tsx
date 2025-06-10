@@ -1,36 +1,32 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { useAtom } from "jotai";
-import { newsletterSlugAtom } from "@/store/newsletter";
 import { AppSidebar } from "@/components/dashboard/app-sidebar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { newsletterDetail } from "@/actions";
 import { toast } from "sonner";
 import { useParams } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
 
 export function AppLayoutShell({ children }: { children: React.ReactNode }) {
   const router = useRouter();
-  const [, setNewsletterSlug] = useAtom(newsletterSlugAtom);
   const { slug } = useParams();
 
-  useEffect(() => {
-    if (!slug) return;
-
-    setNewsletterSlug(slug.toString());
-
-    const fetchNewsletter = async () => {
-      const res = await newsletterDetail({ newsletterSlug: slug.toString() });
-
-      if (res.isOwner === false || res.error) {
+  useQuery({
+    queryKey: ["newsletter", slug],
+    queryFn: async () => {
+      const result = await newsletterDetail({
+        newsletterSlug: slug?.toString() || "",
+      });
+      if (!result.isOwner) {
         toast.error("You do not have access to this newsletter");
         router.push("/dashboard");
       }
-    };
-
-    fetchNewsletter();
-  }, [slug, setNewsletterSlug, router]);
+      return result;
+    },
+    enabled: !!slug,
+    retry: 1,
+  });
 
   return (
     <SidebarProvider>

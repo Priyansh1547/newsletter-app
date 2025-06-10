@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { AppLayoutShell } from "./AppLayoutShell";
 
 export default function RootLayout({
@@ -5,5 +6,9 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <AppLayoutShell>{children}</AppLayoutShell>;
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <AppLayoutShell>{children}</AppLayoutShell>
+    </Suspense>
+  );
 }

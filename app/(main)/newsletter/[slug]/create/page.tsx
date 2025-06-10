@@ -2,12 +2,12 @@
 
 import { sendEmail } from "@/actions";
 import RichTextEditor from "@/components/editor";
-import { newsletterSlugAtom } from "@/store/newsletter";
-import { useAtomValue } from "jotai";
+import { usePathname } from "next/navigation";
 import { toast } from "sonner";
 
 export default function Home() {
-  const slug = useAtomValue(newsletterSlugAtom);
+  const pathname = usePathname();
+  const slug = pathname.split("/")[2];
 
   const handleSend = async (subject: string, content: string) => {
     const sendMail = sendEmail({

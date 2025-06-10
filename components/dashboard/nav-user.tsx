@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDown, LogOut, Moon, Users } from "lucide-react";
+import { ChevronDown, LogOut, Moon, Settings } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -23,6 +23,7 @@ import { useRouter } from "next/navigation";
 import { useAtom } from "jotai";
 import { userAtom } from "@/store/user";
 import { useEffect } from "react";
+import Link from "next/link";
 
 function NavUserSkeleton() {
   return (
@@ -125,10 +126,12 @@ export function NavUser() {
                 <Moon className="mr-2 h-4 w-4" />
                 App Theme
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Users className="mr-2 h-4 w-4" />
-                Community
-              </DropdownMenuItem>
+              <Link href={"/settings"}>
+                <DropdownMenuItem>
+                  <Settings className="mr-2 h-4 w-4" />
+                  Account Settings
+                </DropdownMenuItem>
+              </Link>
               <DropdownMenuItem onClick={handleLogout}>
                 <LogOut className="mr-2 h-4 w-4" />
                 Logout
